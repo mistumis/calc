@@ -1,0 +1,104 @@
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://use.fontawesome.com/3250fd353d.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+      <link href="https://fonts.googleapis.com/css?family=Gruppo|Nova+Mono" rel="stylesheet">
+      <link rel="stylesheet" href = "./calcCSS.css" >
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script>
+          $(document).ready(function(){
+            //initialize f (formula), answer, and op (operator) variables
+          	var f = [], answer, op = "";
+        
+             $(".equals").click(function(event) {
+             //result of clicking equals sign
+               // prevent screen from reloading after function call
+               event.preventDefault();
+               // if there is a formula to calculate, calculate
+               if(f.length>=2 &&
+               		$(".input").val() &&
+                  $(".input").val().split('').pop().match(/\d+/g)){
+                 f.push($('.input').val());
+                 //show only 5 digits to prevent overflow
+                 answer = calcFunc(f).toPrecision(5);
+                 $(".input").val(answer);
+                 $('.showEq').text($(".input").val());
+                 f = [];
+               }
+            });
+            var calcFunc = function(f){
+            //calculate result
+              var res = eval(
+                //concatenate formula elements
+              	String( f.reduce( function(a,b){return a.concat(b);}) ) );
+              for(var i = 3; i < arguments.length; i+=2){
+              	 res = eval(res + arguments[i]+arguments [i+1]);
+              }
+              return res;
+           };
+            $('.b2').click(function(){
+            //result of clicking a number button
+            	
+              //clear input box of operator signs or add to a growing number
+            	$('.input').val(
+                   ["/","*","+","-"].indexOf($('.input').val().toString()) > -1 ?
+                   	$(this).text() : $('.input').val() + $(this).text());
+              //show the full equation under the input box
+              $('.showEq').text($('.input').val() );
+              $('.showEq').text(f.reduce(function(a,b){return a.concat(b);})+$('.input').val() );
+            });
+            $('.c').click(function(e){
+            //clear formula and input box when 'c' is clicked
+               e.preventDefault();
+               $(".input").val("");
+                f = [];
+                $('.showEq').text(f.reduce(function(a,b){return a.concat(b);}));
+            });
+            $('.operator').click(function(e){
+            //action after clicking an operator
+              //if the last value in the input field is a digit, then append this operator
+            	if($(".input").val() && $(".input").val().split('').pop().match(/\d+/g)){
+                f.push($('.input').val());
+                op = $(e.target).text();
+                $('.input').val(op);
+                f.push(op);
+                $('.showEq').text(f.reduce(function(a,b){return a.concat(b);}));
+              }
+            });
+
+          });
+          </script>
+        </head>
+  <body style="text-align:center">
+    <div class = "greyDiv"></div>
+    <form>
+        <input class= "input" readonly type="text" id="text">
+          <button class ="b equals">=</button>
+          <button class ="b c">c</button>
+          <div class = "showEq"></div>
+        </input>
+    </form>
+    
+    <div class = "greyDiv"></div>
+    <div class = "numberContainer">
+      <div class = "numbers">
+        <button class = "b2"id="1">1</button>
+        <button class = "b2"id="2">2</button>
+        <button class = "b2"id="3">3</button>
+        <button class = "b2"id="6">4</button>
+        <button class = "b2"id="7">5</button>
+        <button class = "b2"id="8">6</button>
+        <button class = "b2"id="7">7</button>
+        <button class = "b2"id="8">8</button>
+        <button class = "b2"id="9">9</button>
+      </div>
+      <div class = "operator">
+        <button class = "op"id="-">-</button>
+        <button class = "op"id="+">+</button>
+        <button class = "op"id="*">*</button>
+        <button class = "op"id="d">/</button
+      </div>
+		</div>
+  </body>
+</html>
