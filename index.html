@@ -9,7 +9,7 @@
         <script>
           $(document).ready(function(){
             //initialize f (formula), answer, and op (operator) variables
-          	var f = [], answer, op = "";
+          	var f = [], answer, op = "",showEq="",next="";
         
              $(".equals").click(function(event) {
              //result of clicking equals sign
@@ -23,8 +23,10 @@
                  //show only 5 digits to prevent overflow
                  answer = calcFunc(f).toPrecision(5);
                  $(".input").val(answer);
-                 $('.showEq').text($(".input").val());
+                // $('.showEq').text($(".input").val());
                  f = [];
+                 showEq = answer;
+                 $('.showEq').text(showEq);
                }
             });
             var calcFunc = function(f){
@@ -39,21 +41,26 @@
            };
             $('.b2').click(function(){
             //result of clicking a number button
-            	
               //clear input box of operator signs or add to a growing number
-            	$('.input').val(
-                   ["/","*","+","-"].indexOf($('.input').val().toString()) > -1 ?
-                   	$(this).text() : $('.input').val() + $(this).text());
+              next = ["/","*","+","-"].indexOf($('.input').val().toString()) > -1 ?
+              $(this).text() : $('.input').val() + $(this).text();
+            	$('.input').val(next);
+               next = ["/","*","+","-"].indexOf($('.input').val().toString()) > -1 ?
+              "" :  $(this).text();
               //show the full equation under the input box
-              $('.showEq').text($('.input').val() );
-              $('.showEq').text(f.reduce(function(a,b){return a.concat(b);})+$('.input').val() );
+              //$('.showEq').text($('.input').val() );
+              showEq += next;
+              $('.showEq').text(showEq);
+             // $('.showEq').text(f.reduce(function(a,b){return a.concat(b);})+$('.input').val() );
             });
             $('.c').click(function(e){
+            	showEq = "";
+              $('.showEq').text(showEq);
             //clear formula and input box when 'c' is clicked
                e.preventDefault();
                $(".input").val("");
                 f = [];
-                $('.showEq').text(f.reduce(function(a,b){return a.concat(b);}));
+                //$('.showEq').text(f.reduce(function(a,b){return a.concat(b);}));
             });
             $('.operator').click(function(e){
             //action after clicking an operator
@@ -63,10 +70,11 @@
                 op = $(e.target).text();
                 $('.input').val(op);
                 f.push(op);
-                $('.showEq').text(f.reduce(function(a,b){return a.concat(b);}));
+                showEq += op;
+                $('.showEq').text(showEq);
+                //$('.showEq').text(f.reduce(function(a,b){return a.concat(b);}));
               }
             });
-
           });
           </script>
         </head>
@@ -79,7 +87,6 @@
           <div class = "showEq"></div>
         </input>
     </form>
-    
     <div class = "greyDiv"></div>
     <div class = "numberContainer">
       <div class = "numbers">
