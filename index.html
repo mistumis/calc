@@ -40,6 +40,7 @@
               return res;
            };
             $('.b2').click(function(){
+            $(this).css('height','66.67%');
             //result of clicking a number button
               //clear input box of operator signs or add to a growing number
               next = ["/","*","+","-"].indexOf($('.input').val().toString()) > -1 ?
@@ -63,6 +64,7 @@
                 //$('.showEq').text(f.reduce(function(a,b){return a.concat(b);}));
             });
             $('.operator').click(function(e){
+            $(this).css('height','100%');
             //action after clicking an operator
               //if the last value in the input field is a digit, then append this operator
             	if($(".input").val() && $(".input").val().split('').pop().match(/\d+/g)){
