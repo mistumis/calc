@@ -64,6 +64,7 @@ h1{
 .numbers{
   width:70%;
   float:left;
+  height:100%;
 }
 .operator{
   width:30%;
