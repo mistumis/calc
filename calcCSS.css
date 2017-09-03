@@ -128,8 +128,9 @@ button:hover{
 button:focus{
   outline:none;
 }
+/*increase font size in vertically-oriented phones*/
 @media only screen and (max-width : 500px){
   body{
-  font-size:32px;
+  font-size:24px;
   }
 }
