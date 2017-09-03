@@ -128,3 +128,8 @@ button:hover{
 button:focus{
   outline:none;
 }
+@media only screen and (max-width : 500px){
+  body{
+  font-size:32px;
+  }
+}
