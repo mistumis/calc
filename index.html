@@ -1,7 +1,8 @@
 <html>
   <head>
-    <script src= "jquery-3.2.1.min.js"></script>
-    <link rel="stylesheet" href = "calcCSS.css" >
+      <link rel="stylesheet" href = "calcCSS.css" >
+      <script src= "jquery-3.2.1.min.js"></script> <!-- faster than getting script from a link-->
+      <meta name="viewport" content="width=device-width, user-scalable=no"> <!--for phone resize-->
         <script>
           $(document).ready(function(){
             //initialize f (formula), answer, and op (operator) variables
@@ -10,7 +11,7 @@
              $(".equals").click(function(event) {
              //result of clicking equals sign
                // prevent screen from reloading after function call
-               event.preventDefault();
+               event.preventDefault(); event.stopPropagation();
                // if there is a formula to calculate, calculate
                if(f.length>=2 &&
                		$(".input").val() &&
